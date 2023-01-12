@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= docTitle %></title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    
+    <main>
+        <% if (projects.length > 0){ %>
+            <div class="grid">
+            <% for(let i=0; i<projects.length; i++){ %>
+              <h1 class="product__title"> <%= projects[i].title %> </h1>
+              <h3 class="product__title"> <%= projects[i].description %> </h3>
+              <h4 class="product__title"> <%= projects[i].author %> </h4>
+              <h4 class="product__title"> <%= projects[i].date %> </h4>
+            <% } %>
+            </div>
+        <% } else { %>
+            <h1>Nenhum projeto encontrado!</h1>
+        <% } %>
+    </main>
+  </body>
+</html>

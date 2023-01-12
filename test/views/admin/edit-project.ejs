@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= docTitle %></title>
+    <link rel="stylesheet" href="/project.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/">Pagina inicial</a></li>
+          <li>
+            <a
+              class="<%= path === '/add-project' ? 'active' : '' %>"
+              href="/admin/add-project"
+              >Adicionar Projeto</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <form
+        class="project-form"
+        action="/admin/<% if(editing) { %>edit-project<% } else { %>add-project<% } %>"
+        method="post"
+      >
+        <input
+          type="text"
+          name="title"
+          placeholder="title"
+          value="<% if(editing) { %><%=project.title%><% }%>"
+        />
+        <textarea
+          name="description"
+          id="description"
+          cols="50"
+          rows="5"
+          placeholder="description"
+        >
+<% if(editing) { %><%=project.description%><% }%>
+</textarea
+        >
+        <input
+          type="text"
+          name="author"
+          placeholder="author"
+          value="<% if(editing) { %><%=project.author%><% }%>"
+        />
+        <% if (editing) { %>
+        <input type="hidden" value="<%=project.id%>" name="projectId" />
+        <% } %>
+        <button type="submit">
+          <% if (editing) { %> Atualizar projeto <% } else { %> Adicionar
+          Projeto<% } %>
+        </button>
+      </form>
+    </main>
+  </body>
+</html>

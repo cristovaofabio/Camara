@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= docTitle %></title>
+  </head>
+  <body>
+    <h1>DETALHES DO PROJETO - <%= project.title %></h1>
+    <hr />
+    <h3 class="product__title"><%= project.description %></h3>
+    <h4 class="product__title"><%= project.author %></h4>
+    <h4 class="product__title"><%= project.date %></h4>
+    <form action="/vote" method="post">
+      <button type="submit">Votar a favor</button>
+      <input type="hidden" name="projectId" value="<%= project.id %>" />
+      <input type="hidden" name="vote" value="in-favor" />
+    </form>
+    <form action="/vote" method="post">
+      <button type="submit">Votar contra</button>
+      <input type="hidden" name="projectId" value="<%= project.id %>" />
+      <input type="hidden" name="vote" value="against" />
+    </form>
+  </body>
+</html>
