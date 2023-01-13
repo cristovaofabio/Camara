@@ -75,8 +75,11 @@ exports.postEditProject = (req, res, next) => {
 
 exports.postDeleteProject = (req, res, next) => {
   const projectId = req.body.projectId;
-  Project.deleteById(projectId);
-  res.redirect("/admin/projects");
+  Project.deleteById(projectId)
+    .then(() => {
+      res.redirect("/admin/projects");
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.getProjects = (req, res, next) => {

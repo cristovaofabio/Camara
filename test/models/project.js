@@ -7,7 +7,7 @@ class Project {
     this.description = description;
     this.author = author;
     this.date = new Date();
-    this._id = new mongodb.ObjectId(id);
+    this._id = id ? new mongodb.ObjectId(id) : null;
   }
 
   save() {
@@ -52,6 +52,20 @@ class Project {
       .next()
       .then((project) => {
         return project;
+      })
+      .catch((err) => console.log(err));
+  }
+
+  static deleteById(projectId) {
+    const db = getDb();
+
+    return db
+      .collection("projects")
+      .deleteOne({
+        _id: new mongodb.ObjectId(projectId),
+      })
+      .then((result) => {
+        console.log("Deleted project");
       })
       .catch((err) => console.log(err));
   }
