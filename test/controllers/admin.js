@@ -33,17 +33,22 @@ exports.getEditProject = (req, res, next) => {
   }
 
   const projectId = req.params.projectId;
-  Project.findById(projectId, (project) => {
-    if (!project) {
-      return res.redirect("/");
-    }
-    res.render("admin/edit-project", {
-      docTitle: "Editar projeto",
-      path: "/admin/edit-project",
-      editing: editMode,
-      project: project,
+
+  Project.findById(projectId)
+    .then((project) => {
+      if (!project) {
+        return res.redirect("/");
+      }
+      res.render("admin/edit-project", {
+        docTitle: "Editar projeto",
+        path: "/admin/edit-project",
+        editing: editMode,
+        project: project,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 };
 
 exports.postEditProject = (req, res, next) => {
@@ -52,15 +57,20 @@ exports.postEditProject = (req, res, next) => {
   const updateDescription = req.body.description;
   const updateAuthor = req.body.author;
 
-  const updateProject = new Project(
-    projId,
+  const project = new Project(
     updateTitle,
     updateDescription,
-    updateAuthor
+    updateAuthor,
+    projId
   );
 
-  updateProject.save();
-  res.redirect("/admin/projects");
+  project
+    .save()
+    .then((result) => {
+      console.log("UPDATED PROJECT");
+      res.redirect("/admin/projects");
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.postDeleteProject = (req, res, next) => {
@@ -70,11 +80,13 @@ exports.postDeleteProject = (req, res, next) => {
 };
 
 exports.getProjects = (req, res, next) => {
-  Project.fetchAll((projects) => {
-    res.render("admin/projects", {
-      projects: projects,
-      docTitle: "/admin/projects",
-      path: "/",
-    });
-  });
+  Project.fetchAll()
+    .then((projects) => {
+      res.render("admin/projects", {
+        projects: projects,
+        docTitle: "/admin/projects",
+        path: "/",
+      });
+    })
+    .catch((err) => console.log(err));
 };

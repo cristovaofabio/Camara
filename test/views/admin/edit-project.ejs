@@ -52,7 +52,7 @@
           value="<% if(editing) { %><%=project.author%><% }%>"
         />
         <% if (editing) { %>
-        <input type="hidden" value="<%=project.id%>" name="projectId" />
+        <input type="hidden" value="<%=project._id%>" name="projectId" />
         <% } %>
         <button type="submit">
           <% if (editing) { %> Atualizar projeto <% } else { %> Adicionar

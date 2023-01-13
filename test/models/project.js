@@ -2,18 +2,27 @@ const mongodb = require("mongodb");
 const getDb = require("../util/database").getDb;
 
 class Project {
-  constructor(title, description, author) {
+  constructor(title, description, author, id) {
     this.title = title;
     this.description = description;
     this.author = author;
     this.date = new Date();
+    this._id = new mongodb.ObjectId(id);
   }
 
   save() {
     const db = getDb();
-    return db
-      .collection("projects")
-      .insertOne(this)
+    let dbOp;
+
+    if (this._id) {
+      dbOp = db
+        .collection("projects")
+        .updateOne({ _id: this._id }, { $set: this });
+    } else {
+      dbOp = db.collection("projects").insertOne(this);
+    }
+
+    return dbOp
       .then((result) => {
         console.log(result);
       })
