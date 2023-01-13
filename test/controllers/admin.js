@@ -13,9 +13,16 @@ exports.postAddProject = (req, res, next) => {
   const description = req.body.description;
   const author = req.body.author;
 
-  const project = new Project(null, title, description, author);
-  project.save();
-  res.redirect("/");
+  const project = new Project(title, description, author);
+  project
+    .save()
+    .then((result) => {
+      console.log("Created project");
+      res.redirect("/admin/add-project");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.getEditProject = (req, res, next) => {

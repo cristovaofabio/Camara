@@ -2,37 +2,59 @@ const Project = require("../models/project");
 const Voted = require("../models/voted");
 
 exports.getAllProjects = (req, res, next) => {
-  Project.fetchAll((projects) => {
-    res.render("camara/project-list", {
-      projects: projects,
-      docTitle: "Todos os projetos",
-      path: "/project-list",
-    });
-  });
+  Project.fetchAll()
+    .then((projects) => {
+      res.render("camara/project-list", {
+        projects: projects,
+        docTitle: "Todos os projetos",
+        path: "/project-list",
+      });
+    })
+    .catch((err) => console.log(err));
+
+  // Project.fetchAll((projects) => {
+  //   res.render("camara/project-list", {
+  //     projects: projects,
+  //     docTitle: "Todos os projetos",
+  //     path: "/project-list",
+  //   });
+  // });
 };
 
 exports.getProject = (req, res, next) => {
   const projectId = req.params.projectId;
 
-  Project.findById(projectId, (project) => {
-    res.render("camara/project-detail", {
-      project: project,
-      docTitle: "Detalhe do projeto",
-      path: "/project-detail",
-    });
-  });
+  Project.findById(projectId)
+    .then((project) => {
+      res.render("camara/project-detail", {
+        project: project,
+        docTitle: "Detalhe do projeto",
+        path: "/project-detail",
+      });
+    })
+    .catch((err) => console.log(err));
 
   // res.redirect("/");
 };
 
 exports.getIndex = (req, res, next) => {
-  Project.fetchAll((projects) => {
-    res.render("camara/index", {
-      projects: projects,
-      docTitle: "Todos os projetos",
-      path: "/",
-    });
-  });
+  Project.fetchAll()
+    .then((projects) => {
+      res.render("camara/index", {
+        projects: projects,
+        docTitle: "Todos os projetos",
+        path: "/",
+      });
+    })
+    .catch((err) => console.log(err));
+
+  // Project.fetchAll((projects) => {
+  //   res.render("camara/index", {
+  //     projects: projects,
+  //     docTitle: "Todos os projetos",
+  //     path: "/",
+  //   });
+  // });
 };
 
 exports.getMyProjects = (req, res, next) => {

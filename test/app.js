@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const errorController = require("./controllers/error");
-const mongoConnect = require("./util/database");
+const mongoConnect = require("./util/database").mongoConnect;
 
 const app = express();
 
@@ -22,8 +22,7 @@ app.use(camaraRoutes);
 
 app.use(errorController.getPageNotFound);
 
-mongoConnect((client) => {
-  console.log(client);
+mongoConnect(() => {
   app.listen(3000, () => {
     console.log("Access: http://localhost:3000");
   });

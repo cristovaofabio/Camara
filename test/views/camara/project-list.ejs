@@ -18,7 +18,7 @@
               <h4 class="product__title"> <%= projects[i].author %> </h4>
               <h4 class="product__title"> <%= projects[i].date %> </h4>
               
-              <a href="/projects-list/<%= projects[i].id %>">Ver detalhes</a>
+              <a href="/projects-list/<%= projects[i]._id %>">Ver detalhes</a>
 
               <form action="/vote" method="post">
                 <button type="submit">Votar a favor</button>
